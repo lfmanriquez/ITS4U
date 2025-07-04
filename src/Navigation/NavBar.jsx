@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,6 +17,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { navOptionsAtom } from "@/state/navOptionsAtom";
+import brandLogo from "@/assets/its4u-logo.png";
+
 const appName = import.meta.env.VITE_APP_NAME;
 
 export function NavBar() {
@@ -18,25 +28,51 @@ export function NavBar() {
 
   const closeSheet = () => setIsOpen(false);
 
-  const navOptions = [
-    { id: 0, page: "/", label: "Home" },
-    { id: 1, page: "/about", label: "About" },
-  ];
+  const navOptions = useRecoilValue(navOptionsAtom);
 
   return (
     <header className="sticky top-0 w-full border-b-2 border-secondary dark:border-gray-800 bg-white dark:bg-black">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        {/* Logo */}
+        <div className="md:hidden">
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="w-5 h-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-64 px-3">
+              <SheetHeader>
+                <SheetTitle className="text-lg font-bold">Menu</SheetTitle>
+              </SheetHeader>
 
+              <div className="flex flex-col gap-4">
+                {navOptions.map((n) => (
+                  <Link key={n.id} to={n.page} onClick={closeSheet}>
+                    <Button
+                      variant="default"
+                      className="w-full block dark:hover:bg-primary/50 dark:hover:text-black"
+                    >
+                      {n.label}
+                    </Button>
+                  </Link>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
         <Link to="/">
-          <div className="text-2xl font-bold text-primary">{appName}</div>
+          <img
+            src={brandLogo}
+            alt="ITS4U logo"
+            style={{ maxHeight: "10dvh" }}
+          />
         </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex gap-6 text-sm">
           {navOptions.map((n) => (
             <Link key={n.id} to={n.page}>
-              <Button variant="ghost">{n.label}</Button>
+              <Button variant="default">{n.label}</Button>
             </Link>
           ))}
         </nav>
@@ -49,10 +85,12 @@ export function NavBar() {
           {/* Avatar dropdown (always visible) */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Avatar className="cursor-pointer">
-                <AvatarImage src="" alt="@user" />
-                <AvatarFallback>?</AvatarFallback>
-              </Avatar>
+              <div className="relative">
+                <Avatar className="cursor-pointer">
+                  <AvatarImage src="" alt="@user" />
+                  <AvatarFallback>?</AvatarFallback>
+                </Avatar>
+              </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -62,26 +100,6 @@ export function NavBar() {
           </DropdownMenu>
 
           {/* Hamburger menu for small screens */}
-          <div className="md:hidden">
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu className="w-5 h-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-64 px-3">
-                <div className="flex flex-col gap-4 mt-10">
-                  {navOptions.map((n) => (
-                    <Link key={n.id} to={n.page} onClick={closeSheet}>
-                      <Button variant="outline" className="w-full block">
-                        {n.label}
-                      </Button>
-                    </Link>
-                  ))}
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
         </div>
       </div>
     </header>

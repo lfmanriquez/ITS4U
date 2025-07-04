@@ -6,19 +6,29 @@ const appName = import.meta.env.VITE_APP_NAME;
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-100 p-6 animate-in fade-in duration-1000">
-      <section className="text-center mb-10">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">
+    <div className="min-h-screen bg-gray-100 dark:bg-inherit p-6 animate-in fade-in duration-1000">
+      <section className="text-center mb-10 ">
+        <h1 className="text-4xl font-bold text-gray-900 mb-2 dark:text-white">
           Welcome to {appName}
         </h1>
-        <p className="text-gray-600 text-lg max-w-xl mx-auto">
+        <p className="text-gray-600 text-lg max-w-xl mx-auto dark:text-white">
           Servicing the Vistancia Area, simplifying IT support. Create an
           account, schedule work, and stay informed—all in one place.
         </p>
         <div className="mt-6 flex justify-center gap-4">
-          <Button variant="default">Get Started</Button>
+          <Button
+            variant="default"
+            className="dark:hover:bg-primary/50 dark:hover:text-black"
+          >
+            Get Started
+          </Button>
           <Link to="/about">
-            <Button variant="outline">Learn More</Button>
+            <Button
+              variant="outline"
+              className="dark:hover:bg-black dark:hover:text-white dark:hover:border-white"
+            >
+              Learn More
+            </Button>
           </Link>
         </div>
       </section>
