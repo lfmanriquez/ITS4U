@@ -64,7 +64,8 @@ export function NavBar() {
           <img
             src={brandLogo}
             alt="ITS4U logo"
-            style={{ maxHeight: "10dvh" }}
+            className="hover:scale-105"
+            style={{ maxHeight: "55px" }}
           />
         </Link>
 
@@ -72,7 +73,12 @@ export function NavBar() {
         <nav className="hidden md:flex gap-6 text-sm">
           {navOptions.map((n) => (
             <Link key={n.id} to={n.page}>
-              <Button variant="default">{n.label}</Button>
+              <Button
+                variant="default"
+                className="dark:hover:bg-primary/50 dark:hover:text-black"
+              >
+                {n.label}
+              </Button>
             </Link>
           ))}
         </nav>
