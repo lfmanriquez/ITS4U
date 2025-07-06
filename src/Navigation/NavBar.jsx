@@ -37,7 +37,7 @@ export function NavBar() {
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
-                <Menu className="w-5 h-5" />
+                <Menu className="w-10 h-10" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-64 px-3">
