@@ -12,8 +12,7 @@ export default function Home() {
           Welcome to {appName}
         </h1>
         <p className="text-gray-600 text-lg max-w-xl mx-auto dark:text-white">
-          Servicing the Vistancia Area, simplifying IT support. Create an
-          account, schedule work, and stay informed—all in one place.
+          Servicing the Vistancia area, simplifying IT support.
         </p>
         <div className="mt-6 flex justify-center gap-4">
           <Button
