@@ -45,7 +45,7 @@ export function NavBar() {
   };
 
   return (
-    <header className="sticky top-0 w-full border-b-2 border-secondary dark:border-gray-800 bg-white dark:bg-black">
+    <header className="sticky top-0 z-1 w-full border-b-2 border-secondary dark:border-gray-800 bg-white dark:bg-black">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="md:hidden">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
