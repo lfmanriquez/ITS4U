@@ -4,7 +4,7 @@ import { BellIcon, LaptopIcon, UserIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 const appName = import.meta.env.VITE_APP_NAME;
 
-export default function HomePage() {
+export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-inherit p-6 animate-in fade-in duration-1000">
       <section className="text-center mb-10 ">

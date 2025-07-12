@@ -25,7 +25,15 @@ export function AuthButton() {
 
   return (
     <div className="flex items-center gap-4">
-      {!user && <Button onClick={handleSignIn}>Sign In with Google</Button>}
+      {!user && (
+        <Button
+          variant="outline"
+          className="dark:hover:bg-black dark:hover:text-white dark:hover:border-white"
+          onClick={handleSignIn}
+        >
+          Sign In with Google
+        </Button>
+      )}
     </div>
   );
 }

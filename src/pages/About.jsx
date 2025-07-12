@@ -1,4 +1,4 @@
-export default function AboutPage() {
+export default function About() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-inherit p-6">
       <div className="max-w-2xl text-center space-y-3">

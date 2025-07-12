@@ -15,7 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { navOptionsAtom } from "@/state/navOptionsAtom";
@@ -27,6 +27,7 @@ import { auth, signOut } from "@/lib/firebase";
 export function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const closeSheet = () => setIsOpen(false);
 
@@ -35,7 +36,7 @@ export function NavBar() {
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
-        window.location.reload();
+        navigate("/");
         console.log("User signed out successfully.");
       })
       .catch((error) => {
@@ -87,7 +88,7 @@ export function NavBar() {
           {navOptions.map((n) => (
             <Link key={n.id} to={n.page}>
               <Button
-                variant="default"
+                variant="outline"
                 className="dark:hover:bg-primary/50 dark:hover:text-black"
               >
                 {n.label}
@@ -113,7 +114,9 @@ export function NavBar() {
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <Link to="/profile">
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuItem onSelect={handleSignOut}>
                   Log out
