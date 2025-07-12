@@ -35,9 +35,9 @@ export default function HomePage() {
 
       {/* Info Cards Section */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        <Card className="bg-blue-500 text-white shadow-lg">
+        <Card className="bg-white border-2 border-primary text-primary shadow-lg">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
+            <CardTitle className="flex items-center gap-">
               <LaptopIcon className="h-6 w-6" /> Scheduled Jobs
             </CardTitle>
           </CardHeader>
@@ -47,7 +47,7 @@ export default function HomePage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-green-500 text-white shadow-lg">
+        <Card className="bg-red-500 text-white shadow-lg">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
               <UserIcon className="h-6 w-6" /> New Clients

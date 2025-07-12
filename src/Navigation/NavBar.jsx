@@ -20,15 +20,28 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { navOptionsAtom } from "@/state/navOptionsAtom";
 import brandLogo from "@/assets/its4u-logo.png";
-
-const appName = import.meta.env.VITE_APP_NAME;
+import { useAuth } from "@/context/AuthContext";
+import { AuthButton } from "@/navigation/AuthButton";
+import { auth, signOut } from "@/lib/firebase";
 
 export function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
 
   const closeSheet = () => setIsOpen(false);
 
   const navOptions = useRecoilValue(navOptionsAtom);
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        window.location.reload();
+        console.log("User signed out successfully.");
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
+  };
 
   return (
     <header className="sticky top-0 w-full border-b-2 border-secondary dark:border-gray-800 bg-white dark:bg-black">
@@ -64,7 +77,7 @@ export function NavBar() {
           <img
             src={brandLogo}
             alt="ITS4U logo"
-            className="hover:scale-105"
+            className="transition-transform duration-300 ease-in-out hover:-translate-y-1"
             style={{ maxHeight: "55px" }}
           />
         </Link>
@@ -89,21 +102,27 @@ export function NavBar() {
           <ModeToggle />
 
           {/* Avatar dropdown (always visible) */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div className="relative">
-                <Avatar className="cursor-pointer">
-                  <AvatarImage src="" alt="@user" />
-                  <AvatarFallback>?</AvatarFallback>
-                </Avatar>
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Log out</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="relative">
+                  <Avatar className="cursor-pointer">
+                    <AvatarImage src={user?.photoURL || ""} alt="@user" />
+                    <AvatarFallback>?</AvatarFallback>
+                  </Avatar>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem onSelect={handleSignOut}>
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <AuthButton />
+          )}
 
           {/* Hamburger menu for small screens */}
         </div>
